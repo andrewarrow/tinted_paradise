@@ -1,6 +1,12 @@
 extern crate rand;
 use rand::Rng;
 use std::collections::HashMap;
+use std::thread;
+
+fn count(m: &str) {
+  println!("hi");
+  println!("{}", m);
+}
 
 fn main() {
   let mut hash = HashMap::new();
@@ -21,5 +27,6 @@ fn main() {
     hash.insert(filename, vec.clone());
   }
 
-  println!("{:?}", hash);
+  //println!("{:?}", hash);
+  thread::spawn(move || { count("A"); });
 }
