@@ -6,6 +6,11 @@ use std::{thread, time};
 fn count(m: &mut HashMap<String, Vec<i32>>) {
   loop {
     println!("{}", m.len());
+    let mut i = 1;
+    for (key, _) in m.iter() {
+      println!("{} {}", i,key); 
+      i += 1
+    }
     thread::sleep(time::Duration::from_millis(1000));
   }
 }
