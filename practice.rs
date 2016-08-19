@@ -24,10 +24,16 @@ fn delete_from(m: &Mutex<HashMap<String, Vec<i32>>>) {
 }
 
 fn insert_into(m: &Mutex<HashMap<String, Vec<i32>>>) {
+  let mut i = 1;
   loop {
     let num: u64 = rand::thread_rng().gen_range(10, 800);
     thread::sleep(time::Duration::from_millis(num));
     m.lock().unwrap().insert(ran_filename(), ran_vector());
+    i += 1;
+    if i > 10 {
+      thread::sleep(time::Duration::from_millis(5000));
+      i = 1
+    }
   }
 }
 
