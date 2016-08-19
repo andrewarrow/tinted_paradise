@@ -1,11 +1,12 @@
 extern crate rand;
 use rand::Rng;
 use std::collections::HashMap;
-use std::thread;
+use std::{thread, time};
 
 fn count(m: &mut HashMap<String, Vec<i32>>) {
   loop {
     println!("{}", m.len());
+    thread::sleep(time::Duration::from_millis(1000));
   }
 }
 
@@ -29,8 +30,6 @@ fn main() {
   }
 
   //println!("{:?}", hash);
-  thread::spawn(move || { count(&mut hash); });
-  loop {
-    println!("looping");
-  }
+  let t1 = thread::spawn(move || { count(&mut hash); });
+  let _ = t1.join();
 }
