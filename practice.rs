@@ -4,7 +4,9 @@ use std::collections::HashMap;
 use std::thread;
 
 fn count(m: &mut HashMap<String, Vec<i32>>) {
-  println!("hi {}", m.len());
+  loop {
+    println!("{}", m.len());
+  }
 }
 
 fn main() {
@@ -28,4 +30,7 @@ fn main() {
 
   //println!("{:?}", hash);
   thread::spawn(move || { count(&mut hash); });
+  loop {
+    println!("looping");
+  }
 }
