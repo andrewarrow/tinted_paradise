@@ -7,6 +7,18 @@ use std::sync::{Arc, Mutex};
 fn delete_from(m: &Mutex<HashMap<String, Vec<i32>>>) {
   loop {
     println!("{}", m.lock().unwrap().len());
+
+    let mut i = 1;
+    let mut k = String::new();
+    for (key, _) in m.lock().unwrap().iter() {
+      println!("{} {}", i, key); 
+      i += 1;
+      k = key.to_string();
+    }
+    if i > 1 {
+      m.lock().unwrap().remove(&k);
+    }
+
     thread::sleep(time::Duration::from_millis(1000));
   }
 }
