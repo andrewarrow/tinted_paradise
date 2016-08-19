@@ -3,16 +3,15 @@ use rand::Rng;
 use std::collections::HashMap;
 use std::thread;
 
-fn count(m: &str) {
-  println!("hi");
-  println!("{}", m);
+fn count(m: &mut HashMap<String, Vec<i32>>) {
+  println!("hi {}", m.len());
 }
 
 fn main() {
-  let mut hash = HashMap::new();
-  let mut vec = vec![1];
+  let mut hash: HashMap<String, Vec<i32>> = HashMap::new();
+  let mut vec: Vec<i32> = vec![1];
   for _ in 0..100 {
-    let num = rand::thread_rng().gen_range(0, 255);
+    let num: i32 = rand::thread_rng().gen_range(0, 255);
     vec.push(num)
   }
   println!("{}", vec.len());
@@ -28,5 +27,5 @@ fn main() {
   }
 
   //println!("{:?}", hash);
-  thread::spawn(move || { count("A"); });
+  thread::spawn(move || { count(&mut hash); });
 }
