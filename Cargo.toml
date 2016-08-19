@@ -1,0 +1,11 @@
+[package]
+name = "practice"
+version = "0.0.1"
+authors = ["A. Developer <developer@example.com>"]
+
+[dependencies]
+rand = "0.3"
+
+[[bin]]
+name = "practice"
+path = "practice.rs"
