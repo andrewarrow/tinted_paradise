@@ -31,7 +31,7 @@ fn insert_into(m: &Mutex<HashMap<String, Vec<i32>>>) {
     m.lock().unwrap().insert(ran_filename(), ran_vector());
     i += 1;
     if i > 10 {
-      thread::sleep(time::Duration::from_millis(5000));
+      thread::sleep(time::Duration::from_millis(20000));
       i = 1
     }
   }
