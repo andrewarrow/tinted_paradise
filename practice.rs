@@ -2,21 +2,20 @@ extern crate rand;
 use rand::Rng;
 use std::collections::HashMap;
 use std::{thread, time};
+use std::sync::{Arc, Mutex};
 
-fn delete_from(m: &mut HashMap<String, Vec<i32>>) {
+fn delete_from(m: &Mutex<HashMap<String, Vec<i32>>>) {
   loop {
-    println!("{}", m.len());
-    let mut i = 1;
-    let mut k = String::new();
-    for (key, _) in m.iter() {
-      println!("{} {}", i,key); 
-      i += 1;
-      k = key.to_string();
-    }
+    println!("{}", m.lock().unwrap().len());
     thread::sleep(time::Duration::from_millis(1000));
-    if i > 1 {
-      m.remove(&k);
-    }
+  }
+}
+
+fn insert_into(m: &Mutex<HashMap<String, Vec<i32>>>) {
+  loop {
+    let num: u64 = rand::thread_rng().gen_range(10, 800);
+    thread::sleep(time::Duration::from_millis(num));
+    m.lock().unwrap().insert(ran_filename(), ran_vector());
   }
 }
 
@@ -40,12 +39,10 @@ fn ran_filename() -> String {
 }
 
 fn main() {
-  let mut hash: HashMap<String, Vec<i32>> = HashMap::new();
-    
-  for _ in 0..35 {
-    hash.insert(ran_filename(), ran_vector());
-  }
-
-  let t1 = thread::spawn(move || { delete_from(&mut hash); });
+  let hash: Arc<Mutex<HashMap<String, Vec<i32>>>> = Arc::new(Mutex::new(HashMap::new()));
+  let clone1 = hash.clone();
+  let clone2 = hash.clone();
+  let t1 = thread::spawn(move || { delete_from(&clone1); });
+  thread::spawn(move || { insert_into(&clone2); });
   let _ = t1.join();
 }
