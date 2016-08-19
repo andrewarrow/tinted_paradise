@@ -14,7 +14,9 @@ fn count(m: &mut HashMap<String, Vec<i32>>) {
       k = key.to_string();
     }
     thread::sleep(time::Duration::from_millis(1000));
-    m.remove(&(k));
+    if i > 1 {
+      m.remove(&k);
+    }
   }
 }
 
