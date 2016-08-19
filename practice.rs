@@ -7,11 +7,14 @@ fn count(m: &mut HashMap<String, Vec<i32>>) {
   loop {
     println!("{}", m.len());
     let mut i = 1;
+    let mut k = String::new();
     for (key, _) in m.iter() {
       println!("{} {}", i,key); 
-      i += 1
+      i += 1;
+      k = key.to_string();
     }
     thread::sleep(time::Duration::from_millis(1000));
+    m.remove(&(k));
   }
 }
 
