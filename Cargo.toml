@@ -5,6 +5,7 @@ authors = ["A. Developer <developer@example.com>"]
 
 [dependencies]
 rand = "0.3"
+sys-info = "*"
 
 [[bin]]
 name = "practice"

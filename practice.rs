@@ -1,12 +1,19 @@
 extern crate rand;
+extern crate sys_info;
 use rand::Rng;
 use std::collections::HashMap;
 use std::{thread, time};
 use std::sync::{Arc, Mutex};
+use sys_info::*;
 
 fn delete_from(m: &Mutex<HashMap<String, Vec<i32>>>) {
   loop {
     println!("{}", m.lock().unwrap().len());
+    let mem = mem_info().unwrap();
+    println!("mem: total {} KB, free {} KB, avail {} KB, buffers {} KB, cached {} KB",
+        mem.total, mem.free, mem.avail, mem.buffers, mem.cached);
+    println!("mem: total {} MB, free {} MB, avail {} MB, buffers {} MB, cached {} MB",
+        mem.total/1000, mem.free/1000, mem.avail/1000, mem.buffers/1000, mem.cached/1000);
 
     let mut i = 1;
     let mut k = String::new();
