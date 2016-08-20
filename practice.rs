@@ -30,8 +30,10 @@ fn insert_into(m: &Mutex<HashMap<String, Vec<i32>>>) {
     let num: u64 = rand::thread_rng().gen_range(10, 900);
     thread::sleep(time::Duration::from_millis(num));
     m.lock().unwrap().insert(ran_filename(), ran_vector());
-    while m.lock().unwrap().len() > 10 {
-      thread::sleep(time::Duration::from_millis(2900));
+    if m.lock().unwrap().len() > 10 {
+      while m.lock().unwrap().len() > 0 {
+        thread::sleep(time::Duration::from_millis(100));
+      }
     }
   }
 }
