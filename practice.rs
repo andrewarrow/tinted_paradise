@@ -10,10 +10,12 @@ fn delete_from(m: &Mutex<HashMap<String, Vec<i32>>>) {
 
     let mut i = 1;
     let mut k = String::new();
-    for (key, _) in m.lock().unwrap().iter() {
-      println!("{} {}", i, key); 
+    for (key, v) in m.lock().unwrap().iter() {
+      println!("{} {} {}", i, key, v.len()); 
       i += 1;
-      k = key.to_string();
+      if k.len() == 0 {
+        k = key.to_string();
+      }
     }
     if i > 1 {
       m.lock().unwrap().remove(&k);
@@ -24,22 +26,20 @@ fn delete_from(m: &Mutex<HashMap<String, Vec<i32>>>) {
 }
 
 fn insert_into(m: &Mutex<HashMap<String, Vec<i32>>>) {
-  let mut i = 1;
   loop {
-    let num: u64 = rand::thread_rng().gen_range(10, 800);
+    let num: u64 = rand::thread_rng().gen_range(10, 900);
     thread::sleep(time::Duration::from_millis(num));
     m.lock().unwrap().insert(ran_filename(), ran_vector());
-    i += 1;
-    if i > 10 {
-      thread::sleep(time::Duration::from_millis(20000));
-      i = 1
+    while m.lock().unwrap().len() > 10 {
+      thread::sleep(time::Duration::from_millis(2900));
     }
   }
 }
 
 fn ran_vector() -> Vec<i32> {
   let mut vec: Vec<i32> = vec![1];
-  for _ in 0..100 {
+  let s = rand::thread_rng().gen_range(100, 10000);
+  for _ in 0..s {
     let num: i32 = rand::thread_rng().gen_range(0, 255);
     vec.push(num)
   }
