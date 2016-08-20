@@ -40,7 +40,7 @@ fn insert_into(m: &Mutex<HashMap<String, Vec<i32>>>) {
 
 fn ran_vector() -> Vec<i32> {
   let mut vec: Vec<i32> = vec![1];
-  let s = rand::thread_rng().gen_range(100, 10000);
+  let s = rand::thread_rng().gen_range(100, 100000);
   for _ in 0..s {
     let num: i32 = rand::thread_rng().gen_range(0, 255);
     vec.push(num)
