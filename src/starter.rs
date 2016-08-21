@@ -17,10 +17,11 @@ impl Paradise {
     self.write_message(220, "Welcome to Paradise");
     loop {
       let mut buffer = [0; 100];
-      let _ = self.cstream.read(&mut buffer);
+      let chars = self.cstream.read(&mut buffer).unwrap();
+      println!("{}", chars);
       let heart = str::from_utf8(&buffer).unwrap();
-      println!("{}", heart);
-      self.write_message(331, "User name ok, password required");
+      println!("|{}|", heart.trim());
+      //self.write_message(331, "User name ok, password required");
     }
   }
 
