@@ -29,6 +29,8 @@ fn handle_client(mut stream: TcpStream) {
 }
 
 fn main() { 
+  let p = Paradise::new();
+  println!("{:?}", p);
   let listener = TcpListener::bind("127.0.0.1:2121").unwrap();
   println!("listening started, ready to accept");
   for stream in listener.incoming() {
