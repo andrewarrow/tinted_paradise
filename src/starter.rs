@@ -1,7 +1,6 @@
-use std::io::BufReader;
-use std::io::BufRead;
 use std::net::{TcpStream};
 use std::io::Write;
+use std::io::Read;
 
 #[derive(Debug)]
 pub struct Paradise {
@@ -15,10 +14,9 @@ impl Paradise {
 
   pub fn start(&mut self) {
     self.write_message(220, "Welcome to Paradise");
-    let mut br = BufReader::new(&self.cstream);
     loop {
       let mut buffer = String::new();
-      let _ = br.read_line(&mut buffer);
+      let _ = self.cstream.read_to_string(&mut buffer);
       println!("{:?}", buffer);
       //self.write_message(550, "No");
     }
