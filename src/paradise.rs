@@ -29,17 +29,14 @@ fn handle_client(mut stream: TcpStream) {
 }
 
 fn main() { 
-  let p = Paradise::new();
-  println!("{:?}", p);
   let listener = TcpListener::bind("127.0.0.1:2121").unwrap();
   println!("listening started, ready to accept");
   for stream in listener.incoming() {
     match stream {
       Err(e) => { println!("failed: {}", e) }
       Ok(stream) => {
-        thread::spawn(move || {
-            handle_client(stream)
-            });
+        let p = Paradise::new(stream);
+        println!("{:?}", p);
       }
     }
   }
