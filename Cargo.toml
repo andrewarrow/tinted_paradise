@@ -2,6 +2,8 @@
 name = "paradise"
 version = "0.0.1"
 authors = ["A. Arrow <andrew@0x7a69.net>"]
+description = "Rust FTP Server"
+repository = "https://github.com/andrewarrow/tinted_paradise"
 
 [dependencies]
 rand = "0.3"
@@ -9,4 +11,4 @@ sys-info = "*"
 
 [[bin]]
 name = "paradise"
-path = "paradise.rs"
+path = "src/paradise.rs"
