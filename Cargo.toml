@@ -1,12 +1,12 @@
 [package]
-name = "practice"
+name = "paradise"
 version = "0.0.1"
-authors = ["A. Developer <developer@example.com>"]
+authors = ["A. Arrow <andrew@0x7a69.net>"]
 
 [dependencies]
 rand = "0.3"
 sys-info = "*"
 
 [[bin]]
-name = "practice"
-path = "practice.rs"
+name = "paradise"
+path = "paradise.rs"
