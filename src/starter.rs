@@ -24,11 +24,8 @@ impl Paradise {
   }
 
   pub fn write_message(&mut self, code: i32, message: &str) {
-    let mut buffer = String::new();
-    buffer.push_str("220 ");
-    buffer.push_str(message);
-    buffer.push_str("\r\n");
-    let _ = self.cstream.write(buffer.as_bytes());
+    let foo = format!("{} {}\r\n", code, message);
+    let _ = self.cstream.write(foo.as_bytes());
   }
 }
 
