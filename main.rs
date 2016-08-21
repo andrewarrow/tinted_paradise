@@ -1,10 +1,7 @@
 use std::net::{TcpListener,TcpStream};
 use std::thread;
-use std::sync::mpsc::{channel, Receiver, TryRecvError};
-use std::io::Read;
 use std::io::Write;
 use std::str;
-use std::io;
 use std::io::BufReader;
 use std::io::BufRead;
 
@@ -23,7 +20,7 @@ fn handle_client(mut stream: TcpStream) {
   loop {
 
     let mut buffer = String::new();
-    br.read_line(&mut buffer);
+    let _ = br.read_line(&mut buffer);
     println!("{:?}", buffer);
   }
 }
