@@ -3,28 +3,33 @@ use std::thread;
 use std::sync::mpsc::{channel, Receiver, TryRecvError};
 use std::io::Read;
 use std::io::Write;
+use std::str;
 
 fn handle_client(mut stream: TcpStream) {
   println!("{:?}", stream);
   let addr = stream.peer_addr().unwrap();
   println!("Got connection from {}", addr);
 
-  let mut buf = [0; 512];
   match stream.write(b"220 Welcome to Tinted Paradise\r\n") {
             Err(_) => {},
             Ok(_) => {},
         }
 
-  let _ = match stream.read(&mut buf) {
-    Err(e) => panic!("Got an error: {}", e),
-      Ok(m) => {
-        if m == 0 {
-          // we've got an EOF
-        }
-        println!("{:?}", m);
-        m
-      },
-  };
+  loop {
+    let mut buf = [0; 512];
+    let _ = match stream.read(&mut buf) {
+      Err(e) => panic!("Got an error: {}", e),
+        Ok(m) => {
+          if m == 0 {
+            break;
+            // we've got an EOF
+          }
+          let heart = str::from_utf8(&buf).unwrap();
+          println!("{:?}", heart);
+          m
+        },
+    };
+  }
 }
 
 fn main() { 
