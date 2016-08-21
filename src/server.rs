@@ -22,7 +22,10 @@ impl Paradise {
       let line = str::from_utf8(&buffer[0..chars]).unwrap();
       let v: Vec<&str> = line.split_terminator(' ').collect();
       println!("{:?}", v);
+      let command = v[0];
+      let param = v[1];
       //self.write_message(331, "User name ok, password required");
+      //handle_user();
     }
   }
 

@@ -1,8 +1,7 @@
+extern crate paradise;
+
 use std::net::TcpListener;
 use std::thread;
-
-pub use self::starter::Paradise;
-mod starter;
 
 fn main() { 
   let listener = TcpListener::bind("127.0.0.1:2121").unwrap();
@@ -14,7 +13,7 @@ fn main() {
         let addr = stream.peer_addr().unwrap();
         println!("Got connection from {}", addr);
 
-        let mut p = Paradise::new(stream);
+        let mut p = paradise::server::Paradise::new(stream);
         println!("{:?}", p);
         thread::spawn(move || {
           p.start();
