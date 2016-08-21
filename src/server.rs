@@ -3,6 +3,8 @@ use std::io::Write;
 use std::io::Read;
 use std::str;
 
+use auth;
+
 #[derive(Debug)]
 pub struct Paradise {
   cstream: TcpStream
@@ -25,7 +27,7 @@ impl Paradise {
       let command = v[0];
       let param = v[1];
       //self.write_message(331, "User name ok, password required");
-      //handle_user();
+      auth::handle_user();
     }
   }
 
