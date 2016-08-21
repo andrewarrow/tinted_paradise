@@ -17,8 +17,11 @@ impl Paradise {
   }
 
   pub fn writeMessage(&mut self, code: i32, message: &str) {
-    let buffer = String::new();
-    self.cstream.write(b"220 Welcome to Tinted Paradise\r\n");
+    let mut buffer = String::new();
+    buffer.push_str("220 ");
+    buffer.push_str(message);
+    buffer.push_str("\r\n");
+    self.cstream.write(buffer.as_bytes());
   }
 }
 
