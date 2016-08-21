@@ -20,6 +20,7 @@ impl Paradise {
       let mut buffer = String::new();
       let _ = br.read_line(&mut buffer);
       println!("{:?}", buffer);
+      //self.write_message(550, "No");
     }
   }
 

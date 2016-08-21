@@ -1,4 +1,5 @@
 use std::net::TcpListener;
+use std::thread;
 
 pub use self::starter::Paradise;
 mod starter;
@@ -15,7 +16,9 @@ fn main() {
 
         let mut p = Paradise::new(stream);
         println!("{:?}", p);
-        p.start();
+        thread::spawn(move || {
+          p.start();
+        });
       }
     }
   }
