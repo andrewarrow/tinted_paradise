@@ -1,8 +1,6 @@
 use std::net::{TcpListener,TcpStream};
 use std::thread;
 use std::str;
-use std::io::BufReader;
-use std::io::BufRead;
 
 pub use self::starter::Paradise;
 mod starter;

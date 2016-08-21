@@ -1,4 +1,5 @@
-
+use std::io::BufReader;
+use std::io::BufRead;
 use std::net::{TcpStream};
 use std::io::Write;
 
@@ -14,6 +15,12 @@ impl Paradise {
 
   pub fn start(&mut self) {
     self.writeMessage(220, "Welcome to Paradise");
+    let mut br = BufReader::new(&self.cstream);
+    loop {
+      let mut buffer = String::new();
+      let _ = br.read_line(&mut buffer);
+      println!("{:?}", buffer);
+    }
   }
 
   pub fn writeMessage(&mut self, code: i32, message: &str) {
@@ -25,16 +32,3 @@ impl Paradise {
   }
 }
 
-
-/*
-fn handle_client(mut stream: TcpStream) {
-  let mut br = BufReader::new(&stream);
-
-  loop {
-
-    let mut buffer = String::new();
-    let _ = br.read_line(&mut buffer);
-    println!("{:?}", buffer);
-  }
-}
-*/
