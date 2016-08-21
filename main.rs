@@ -4,6 +4,9 @@ use std::sync::mpsc::{channel, Receiver, TryRecvError};
 use std::io::Read;
 use std::io::Write;
 use std::str;
+use std::io;
+use std::io::BufReader;
+use std::io::BufRead;
 
 fn handle_client(mut stream: TcpStream) {
   println!("{:?}", stream);
@@ -15,20 +18,13 @@ fn handle_client(mut stream: TcpStream) {
             Ok(_) => {},
         }
 
+  let mut br = BufReader::new(&stream);
+
   loop {
-    let mut buf = [0; 512];
-    let _ = match stream.read(&mut buf) {
-      Err(e) => panic!("Got an error: {}", e),
-        Ok(m) => {
-          if m == 0 {
-            break;
-            // we've got an EOF
-          }
-          let heart = str::from_utf8(&buf).unwrap();
-          println!("{:?}", heart);
-          m
-        },
-    };
+
+    let mut buffer = String::new();
+    br.read_line(&mut buffer);
+    println!("{:?}", buffer);
   }
 }
 
