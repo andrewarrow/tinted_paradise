@@ -19,8 +19,8 @@ impl Paradise {
       let mut buffer = [0; 100];
       let chars = self.cstream.read(&mut buffer).unwrap();
       println!("{}", chars);
-      let heart = str::from_utf8(&buffer).unwrap();
-      println!("|{}|", heart.trim());
+      let heart = str::from_utf8(&buffer[0..12]).unwrap();
+      println!("|{}|", heart);
       //self.write_message(331, "User name ok, password required");
     }
   }
