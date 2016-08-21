@@ -1,6 +1,7 @@
 use std::net::{TcpStream};
 use std::io::Write;
 use std::io::Read;
+use std::str;
 
 #[derive(Debug)]
 pub struct Paradise {
@@ -15,10 +16,11 @@ impl Paradise {
   pub fn start(&mut self) {
     self.write_message(220, "Welcome to Paradise");
     loop {
-      let mut buffer = String::new();
-      let _ = self.cstream.read_to_string(&mut buffer);
-      println!("{:?}", buffer);
-      //self.write_message(550, "No");
+      let mut buffer = [0; 100];
+      let _ = self.cstream.read(&mut buffer);
+      let heart = str::from_utf8(&buffer).unwrap();
+      println!("{}", heart);
+      self.write_message(331, "User name ok, password required");
     }
   }
 
