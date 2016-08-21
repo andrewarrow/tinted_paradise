@@ -2,17 +2,19 @@ use std::net::{TcpStream};
 use std::io::Write;
 use std::io::Read;
 use std::str;
+use std::collections::HashMap;
 
 use auth;
 
 #[derive(Debug)]
 pub struct Paradise {
-  cstream: TcpStream
+  cstream: TcpStream,
+  map: HashMap<String, fn()>
 }
 
 impl Paradise {
-  pub fn new(stream: TcpStream) -> Paradise {
-    Paradise {cstream: stream}
+  pub fn new(stream: TcpStream, map: &HashMap<String, fn()>) -> Paradise {
+    Paradise {cstream: stream, map: map.clone()}
   }
 
   pub fn start(&mut self) {
@@ -27,7 +29,7 @@ impl Paradise {
       let command = v[0];
       let param = v[1];
       //self.write_message(331, "User name ok, password required");
-      auth::handle_user();
+      self.map[command]();
     }
   }
 
