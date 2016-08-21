@@ -14,7 +14,7 @@ impl Paradise {
   }
 
   pub fn start(&mut self) {
-    self.writeMessage(220, "Welcome to Paradise");
+    self.write_message(220, "Welcome to Paradise");
     let mut br = BufReader::new(&self.cstream);
     loop {
       let mut buffer = String::new();
@@ -23,12 +23,12 @@ impl Paradise {
     }
   }
 
-  pub fn writeMessage(&mut self, code: i32, message: &str) {
+  pub fn write_message(&mut self, code: i32, message: &str) {
     let mut buffer = String::new();
     buffer.push_str("220 ");
     buffer.push_str(message);
     buffer.push_str("\r\n");
-    self.cstream.write(buffer.as_bytes());
+    let _ = self.cstream.write(buffer.as_bytes());
   }
 }
 

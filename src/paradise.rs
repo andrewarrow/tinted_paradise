@@ -1,6 +1,4 @@
-use std::net::{TcpListener,TcpStream};
-use std::thread;
-use std::str;
+use std::net::TcpListener;
 
 pub use self::starter::Paradise;
 mod starter;
