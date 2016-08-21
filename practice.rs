@@ -9,11 +9,6 @@ use sys_info::*;
 fn delete_from(m: &Mutex<HashMap<String, Vec<i32>>>) {
   loop {
     println!("{}", m.lock().unwrap().len());
-    let mem = mem_info().unwrap();
-    println!("mem: total {} KB, free {} KB, avail {} KB, buffers {} KB, cached {} KB",
-        mem.total, mem.free, mem.avail, mem.buffers, mem.cached);
-    println!("mem: total {} MB, free {} MB, avail {} MB, buffers {} MB, cached {} MB",
-        mem.total/1000, mem.free/1000, mem.avail/1000, mem.buffers/1000, mem.cached/1000);
 
     let mut i = 1;
     let mut k = String::new();
@@ -25,9 +20,16 @@ fn delete_from(m: &Mutex<HashMap<String, Vec<i32>>>) {
       }
     }
     if i > 1 {
-      m.lock().unwrap().remove(&k);
+      //m.lock().unwrap().remove(&k);
     }
 
+    let mem = mem_info().unwrap();
+    println!("swap: total {} KB, free {} KB", mem.swap_total, mem.swap_free);
+    println!("proc total: {}", proc_total().unwrap());
+    println!("mem: total {} KB, free {} KB, avail {} KB, buffers {} KB, cached {} KB",
+        mem.total, mem.free, mem.avail, mem.buffers, mem.cached);
+    println!("mem: total {} MB, free {} MB, avail {} MB, buffers {} MB, cached {} MB",
+        mem.total/1000, mem.free/1000, mem.avail/1000, mem.buffers/1000, mem.cached/1000);
     thread::sleep(time::Duration::from_millis(1000));
   }
 }
@@ -37,7 +39,7 @@ fn insert_into(m: &Mutex<HashMap<String, Vec<i32>>>) {
     let num: u64 = rand::thread_rng().gen_range(10, 900);
     thread::sleep(time::Duration::from_millis(num));
     m.lock().unwrap().insert(ran_filename(), ran_vector());
-    if m.lock().unwrap().len() > 10 {
+    if m.lock().unwrap().len() > 100 {
       while m.lock().unwrap().len() > 0 {
         thread::sleep(time::Duration::from_millis(100));
       }
@@ -47,7 +49,7 @@ fn insert_into(m: &Mutex<HashMap<String, Vec<i32>>>) {
 
 fn ran_vector() -> Vec<i32> {
   let mut vec: Vec<i32> = vec![1];
-  let s = rand::thread_rng().gen_range(100, 100000);
+  let s = rand::thread_rng().gen_range(100, 1000000);
   for _ in 0..s {
     let num: i32 = rand::thread_rng().gen_range(0, 255);
     vec.push(num)
